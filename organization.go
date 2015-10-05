@@ -38,7 +38,7 @@ type Organization struct {
 }
 
 func (c *Client) Organization(orgId string) (organization *Organization, err error) {
-	req, err := http.NewRequest("GET", c.endpoint+"/organization/"+orgId, nil)
+	req, err := http.NewRequest("GET", c.endpoint+"/organization/"+orgId + c.authenticated, nil)
 	if err != nil {
 		return
 	}
@@ -90,7 +90,7 @@ func (o *Organization) Members() (members []Member, err error) {
 }
 
 func (o *Organization) Boards() (boards []Board, err error) {
-	req, err := http.NewRequest("GET", o.client.endpoint+"/organizations/"+o.Id+"/boards", nil)
+	req, err := http.NewRequest("GET", o.client.endpoint+"/organizations/"+o.Id+"/boards"+o.client.authenticated, nil)
 	if err != nil {
 		return
 	}

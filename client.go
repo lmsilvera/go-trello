@@ -24,15 +24,18 @@ type Client struct {
 	client   *http.Client
 	endpoint string
 	version  string
+	authenticated string
 }
-
-func NewClient() (*Client, error) {
+// You can set "" any values to access to public information.
+func NewClient(token string, consumerKey string) (*Client, error) {
 	version := "1"
 	endpoint := "https://api.trello.com/" + version
+	filters := "createCard,createBoard,commentCard,updateCheckItemStateOnCard,addChecklistToCard,createList,updateCard"
+	client := Client{ client: http.DefaultClient, endpoint: endpoint, version: version}
 
-	return &Client{
-		client:   http.DefaultClient,
-		endpoint: endpoint,
-		version:  version,
-	}, nil
+	if token != "" && consumerKey != "" {
+		client.authenticated = "?key="+consumerKey+"&token="+token+"&filter="+filters
+	}
+
+	return &client, nil
 }

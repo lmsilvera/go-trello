@@ -247,7 +247,7 @@ func (b *Board) MemberCards(IdMember string) (cards []Card, err error) {
 }
 
 func (b *Board) Actions() (actions []Action, err error) {
-	req, err := http.NewRequest("GET", b.client.endpoint+"/boards/"+b.Id+"/actions", nil)
+	req, err := http.NewRequest("GET", b.client.endpoint+"/boards/"+b.Id+"/actions"+ b.client.authenticated, nil)
 	if err != nil {
 		return
 	}
